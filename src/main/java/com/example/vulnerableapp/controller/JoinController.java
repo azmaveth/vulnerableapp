@@ -1,27 +1,20 @@
 package com.example.vulnerableapp.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.example.vulnerableapp.model.User;
 
-@RestController
-@RequestMapping("/user")
-public class UserController {
-    // Just manually create test data for now
+@Controller
+@RequestMapping("/join")
+public class JoinController {
     private static final User user1 = new User(1, "Alice", true);
     private static final User user2 = new User(2, "Bob", false);
-
-    @GetMapping("")
-    public User getCurrentUser() {
-        User currentUser = user1; // Skip any real auth for now
-        return currentUser;
-    }
-
-    @GetMapping("/{id}")
-    public User getUser(@PathVariable(name = "id") long id) {
+    
+    @RequestMapping("/{id}")
+    public String joinSuccess(@PathVariable(name = "id") long id, Model model) {
         User user;
 
         if (id == 1) {
@@ -32,6 +25,11 @@ public class UserController {
             user = null;
         }
 
-        return user;
+        if (user == null) {
+            return "redirect:/";
+        }
+        
+        model.addAttribute("name", user.getName()); 
+        return "join";
     }
 }
