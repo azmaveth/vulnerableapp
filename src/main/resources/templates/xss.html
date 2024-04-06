@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>XSS Demo</title>
+</head>
+<body>
+    <h1>XSS Demonstration</h1>
+    <p th:utext="${input}"></p> <!-- This line is vulnerable. Change "utext" to "text" in the template to enable output encoding. -->
+</body>
+</html>
